@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="boardMapper">
+
+	<!-- 게시판 목록 전체 보기 -->
+	<select id="All_Board" resultType="BoardDto">
+		SELECT SEQ, TITLE, REGDATE,
+		DOWNLOAD
+		FROM BOARD
+	</select>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="BoardDto">
+	SELECT USERNAME, PASSWORD FROM ACCOUNT2 WHERE USERNAME=#{username}
+	</select>
+
+	<!-- 게시글 상세 보기 -->
+	<select id="Detail_Board" parameterType="int"
+		resultType="BoardDto">
+		SELECT SEQ, TITLE, CONTENT , REGDATE, DOWNLOAD
+		FROM BOARD
+		WHERE
+		SEQ=#{seq}
+	</select>
+
+	<!-- 게시글 작성 -->
+	<insert id="write" parameterType="BoardDto">
+		INSERT INTO BOARD
+		(TITLE,
+		CONTENT, REGDATE, DOWNLOAD)
+		VALUES(#{title},#{content},DEFAULT, #{download})
+	</insert>
+
+	<!-- 게시글 수정 -->
+	<update id="update" parameterType="BoardDto">
+		UPDATE BOARD SET
+		TITLE=#{title}, CONTENT=#{content}
+		WHERE SEQ=#{seq}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM BOARD WHERE
+		SEQ=#{seq}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		SELECT COUNT(SEQ) FROM BOARD
+	</select>
+
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="BoardDto">
+		SELECT SEQ, TITLE, CONTENT , REGDATE
+		FROM BOARD
+		ORDER BY SEQ
+		DESC
+		LIMIT ${displayPost}, ${postNum}
+	</select>
+
+	<!-- 페이지 정렬 날짜 최신순 -->
+	<select id="regdateRow" parameterType="hashMap" resultType="BoardDto" >
+		SELECT SEQ, TITLE, CONTENT ,
+		REGDATE
+		FROM BOARD ORDER BY REGDATE DESC
+		LIMIT ${displayPost}, ${postNum}
+	</select>
+
+	<!-- 페이징 정렬 제목순 -->
+	<select id="titleRow" parameterType="hashMap" resultType="BoardDto" >
+		SELECT SEQ, TITLE, CONTENT ,
+		REGDATE
+		FROM BOARD ORDER BY TITLE DESC
+		LIMIT ${displayPost}, ${postNum}
+	</select>
+
+	<!-- 페이징 seq순 -->
+	<select id="seqRow" parameterType="hashMap" resultType="BoardDto" >
+		SELECT SEQ, TITLE, CONTENT ,
+		REGDATE
+		FROM BOARD ORDER BY SEQ
+		LIMIT ${displayPost}, ${postNum}
+	</select>
+
+	<!-- 파일 업로드 -->
+	<insert id="upload" parameterType="BoardDto"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO FILE
+		(FILENAME,
+		FILESIZE, SAVEPATH)
+		VALUES (#{filename},#{filesize},#{savepath})
+	</insert>
+
+	<select id="down" parameterType="int" resultType="BoardDto">
+		SELECT SAVEPATH, FILENAME
+		FROM FILE
+		WHERE ID=#{id}
+	</select>
+
+
+
+</mapper>
+
