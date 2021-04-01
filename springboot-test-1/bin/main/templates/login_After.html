@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>로그인후 나오는 페이지</h1>
+
+	<form name='f' th:action="@{/logout}" method='POST'>
+		<button type="submit">로그아웃</button>
+		<!-- 로그아웃 누르면 /login?logout로 넘어가서 다시 로그인페이지 -->
+	</form>
+
+</body>
+</html>
