@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<title>계정생성 page</title>
+</head>
+<body>
+	<h1>계정생성페이지</h1>
+
+	<form th:method="POST" th:action="@{/signUp}" th:object="${signUpForm}">
+	
+		<span>이름</span>
+        <input type="text" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'error'" />
+        <div th:each="msg : ${#fields.errors('username')}">
+          <p th:text="${msg}"></p>
+        </div>
+        <br/>    
+		
+		<span>비밀번호</span>
+        <input type="password" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'error'" 
+        placeholder="비밀번호를 입력하세요" />
+        <div th:each="msg : ${#fields.errors('password')}">
+          <p th:text="${msg}"></p>
+        </div>
+        <br/>
+			
+			<span>재확인</span>
+			<input type="password" th:field="*{passwordConf}" placeholder="비밀번호를 입력하세요">
+			<div th:each="msg : ${#fields.errors('passwordConf')}">
+          <p th:text="${msg}"></p>
+        </div>
+			<br/>
+
+		<button type="submit">전송</button>
+	</form>
+</body>
+</html>

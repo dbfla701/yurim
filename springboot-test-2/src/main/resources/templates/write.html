@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>ip추가</title>
+</head>
+<body>
+			<header>
+				<h1> 게시판</h1>
+			</header>
+			<hr />
+			 
+			<nav>
+			  홈 - 글 작성
+			</nav>
+			<hr />
+			<!-- th:object="${write}" -->
+				<form role="form" id="submitForm"
+				method="post" th:action="@{/write}" th:object="${data}">
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<label for="ip">추가할 ip</label>
+									<input type="text" th:field="*{ip}" />
+									<!-- <textarea th:field="*{ip}"></textarea> -->
+								</td>
+							</tr>
+						</tbody>			
+					</table>
+		<div style="text-align: right;">
+<!--             <input type="submit" th:value="목록" th:formaction="@{/list}">
+            <input type="reset" th:value="취소"> -->
+          </div>
+				</form>
+				 <input type="submit" form="submitForm" value="작성">
+			<hr />
+</body>
+</html>

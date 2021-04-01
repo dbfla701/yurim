@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<meta name="_csrf" th:content="${_csrf.token}">
+<meta name="_csrf_header" th:content="${_csrf.headerName}">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>로그인후 나오는 페이지</title>
+</head>
+<body>
+	<h1>로그인후 나오는 페이지</h1>
+	<table th:inline="text">
+			<tr>
+				<th>ID</th>
+				<th>IP</th>
+			</tr>
+			<!-- 여기에 for문 -->
+			<tr th:each="dto : ${lists}" th:onclick="'window.location.href 
+= \'' + @{/delete/{id}(id=${dto.id})} + '\''" th:method="get">
+				<td th:text="${dto.id}">id</td>
+				<td th:text="${dto.ip}">ip</td>
+			</tr>
+	</table>
+	<!-- <button type="button" th:onclick="callDelete();">삭제</button> -->
+
+
+	<form name='f' th:action="@{/logout}" method='POST'>
+		<button type="submit">로그아웃</button>
+		<!-- 로그아웃 누르면 /login?logout로 넘어가서 다시 로그인페이지 -->
+	</form>
+
+	<a th:href="@{/write}">IP 추가</a>
+	
+<!-- 	<script th:inline="javascript">
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		function callDelete() {
+	var result = confirm("게시글 삭제?");
+	if(result==true){
+		alert("삭제 성공");
+		location.href='[[@{/delete/__${id}__}]]';
+	}else{
+		alert("삭제 실패");
+	}
+}
+	</script> -->
+	
+</body>
+</html>
